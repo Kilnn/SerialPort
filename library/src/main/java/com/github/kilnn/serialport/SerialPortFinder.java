@@ -15,10 +15,6 @@ import java.util.Vector;
 
 public class SerialPortFinder {
 
-    private static final String TAG = "SerialPort";
-
-    private Vector<Driver> mDrivers = null;
-
     public class Driver {
         public Driver(String name, String root) {
             mDriverName = name;
@@ -52,21 +48,22 @@ public class SerialPortFinder {
         }
     }
 
-    Vector<Driver> getDrivers() throws IOException {
-        if (mDrivers == null) {
+    private static final String TAG = "SerialPortFinder";
+
+    private Vector<Driver> mDrivers = null;
+
+    Vector<Driver> getDrivers(boolean refresh) throws IOException {
+        if (refresh || mDrivers == null) {
             mDrivers = new Vector<>();
-            LineNumberReader r = new LineNumberReader(new FileReader(
-                    "/proc/tty/drivers"));
+            LineNumberReader r = new LineNumberReader(new FileReader("/proc/tty/drivers"));
             String l;
             while ((l = r.readLine()) != null) {
                 // Issue 3:
-                // Since driver name may contain spaces, we do not extract
-                // driver name with split()
+                // Since driver name may contain spaces, we do not extract driver name with split()
                 String drivername = l.substring(0, 0x15).trim();
                 String[] w = l.split(" +");
                 if ((w.length >= 5) && (w[w.length - 1].equals("serial"))) {
-                    Log.d(TAG, "Found new driver " + drivername + " on "
-                            + w[w.length - 4]);
+                    Log.d(TAG, "Found new driver " + drivername + " on " + w[w.length - 4]);
                     mDrivers.add(new Driver(drivername, w[w.length - 4]));
                 }
             }
@@ -75,19 +72,18 @@ public class SerialPortFinder {
         return mDrivers;
     }
 
-    public String[] getAllDevices() {
+    public String[] getAllDevices(boolean refresh) {
         Vector<String> devices = new Vector<>();
         // Parse each driver
         Iterator<Driver> itdriv;
         try {
-            itdriv = getDrivers().iterator();
+            itdriv = getDrivers(refresh).iterator();
             while (itdriv.hasNext()) {
                 Driver driver = itdriv.next();
                 Iterator<File> itdev = driver.getDevices().iterator();
                 while (itdev.hasNext()) {
                     String device = itdev.next().getName();
-                    String value = String.format("%s (%s)", device,
-                            driver.getName());
+                    String value = String.format("%s (%s)", device, driver.getName());
                     devices.add(value);
                 }
             }
@@ -97,12 +93,12 @@ public class SerialPortFinder {
         return devices.toArray(new String[devices.size()]);
     }
 
-    public String[] getAllDevicesPath() {
+    public String[] getAllDevicesPath(boolean refresh) {
         Vector<String> devices = new Vector<>();
         // Parse each driver
         Iterator<Driver> itdriv;
         try {
-            itdriv = getDrivers().iterator();
+            itdriv = getDrivers(refresh).iterator();
             while (itdriv.hasNext()) {
                 Driver driver = itdriv.next();
                 Iterator<File> itdev = driver.getDevices().iterator();
