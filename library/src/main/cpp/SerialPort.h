@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/String;II)Ljava/io/FileDescriptor;
  */
 JNIEXPORT jobject JNICALL Java_com_kilnn_drive_app_tools_SerialPort_open(
-		JNIEnv *, jclass, jstring, jint, jint);
+        JNIEnv *, jclass, jstring, jint, jint);
 
 /*
  * Class:     org_winplus_serial_utils_SerialPort
@@ -21,7 +21,7 @@ JNIEXPORT jobject JNICALL Java_com_kilnn_drive_app_tools_SerialPort_open(
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_kilnn_drive_app_tools_SerialPort_close(
-		JNIEnv *, jobject);
+        JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }
