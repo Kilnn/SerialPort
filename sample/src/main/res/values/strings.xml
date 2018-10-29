@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">SerialPort</string>
+
+    <string name="serial_port">串口</string>
+    <string name="permission_dialog_rationale_file_access">如果没有文件读写权限，您可能无法正常使用。</string>
+
+    <string name="permission_dialog_title">提示</string>
+    <string name="permission_dialog_rationale_sure">授予权限</string>
+    <string name="permission_dialog_rationale_cancel">拒绝</string>
+    <string name="permission_dialog_setting_message">我们需要的一些权限被您拒绝或者系统发生错误导致申请失败，请您到设置页面手动授权，否则功能无法正常使用</string>
+    <string name="permission_dialog_setting_sure">去设置</string>
+    <string name="permission_dialog_setting_cancel">取消</string>
+
+    <string-array name="baud_rate">
+        <item>300</item>
+        <item>600</item>
+        <item>1200</item>
+        <item>2400</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>230400</item>
+        <item>460800</item>
+        <item>921600</item>
+    </string-array>
+
+    <string-array name="text_style">
+        <item>Hex</item>
+        <item>String</item>
+    </string-array>
+
 </resources>
