@@ -116,6 +116,7 @@ public class SerialPort {
     }
 
     public void release() {
+        mListener = null;
         mRunning = false;
         if (mReadThread != null && mReadThread.isAlive()) {
             mReadThread.interrupt();

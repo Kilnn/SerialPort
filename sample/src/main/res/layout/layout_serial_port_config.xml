@@ -18,14 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="72dp"
-            android:text="波特率"/>
+            android:text="@string/baud_rate"/>
 
         <Spinner
             android:id="@+id/spinner_baud_rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="#0877A6"/>
+            android:layout_margin="4dp"/>
 
     </LinearLayout>
 
@@ -38,14 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="72dp"
-            android:text="ReadStyle"/>
+            android:text="@string/read_style"/>
 
         <Spinner
             android:id="@+id/spinner_read_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="#0877A6"/>
+            android:layout_margin="4dp"/>
 
     </LinearLayout>
 
@@ -58,14 +56,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="72dp"
-            android:text="WriteStyle"/>
+            android:text="@string/write_style"/>
 
         <Spinner
             android:id="@+id/spinner_write_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="#0877A6"/>
+            android:layout_margin="4dp"/>
 
     </LinearLayout>
 

@@ -16,19 +16,22 @@ import java.util.Vector;
 public class SerialPortFinder {
 
     public class Driver {
-        public Driver(String name, String root) {
+        private Driver(String name, String root) {
             mDriverName = name;
             mDeviceRoot = root;
         }
 
         private String mDriverName;
         private String mDeviceRoot;
-        Vector<File> mDevices = null;
+        private Vector<File> mDevices = null;
 
-        public Vector<File> getDevices() {
+        private Vector<File> getDevices() throws SecurityException {
             if (mDevices == null) {
                 mDevices = new Vector<>();
                 File dev = new File("/dev");
+                if (!dev.canRead()) {
+                    throw new SecurityException();
+                }
                 File[] files = dev.listFiles();
                 if (files != null) {
                     int i;
@@ -52,10 +55,14 @@ public class SerialPortFinder {
 
     private Vector<Driver> mDrivers = null;
 
-    Vector<Driver> getDrivers(boolean refresh) throws IOException {
+    private Vector<Driver> getDrivers(boolean refresh) throws IOException, SecurityException {
         if (refresh || mDrivers == null) {
             mDrivers = new Vector<>();
-            LineNumberReader r = new LineNumberReader(new FileReader("/proc/tty/drivers"));
+            File file = new File("/proc/tty/drivers");
+            if (!file.canRead()) {
+                throw new SecurityException();
+            }
+            LineNumberReader r = new LineNumberReader(new FileReader(file));
             String l;
             while ((l = r.readLine()) != null) {
                 // Issue 3:
@@ -72,43 +79,35 @@ public class SerialPortFinder {
         return mDrivers;
     }
 
-    public String[] getAllDevices(boolean refresh) {
+    public String[] getAllDevices(boolean refresh) throws IOException, SecurityException {
         Vector<String> devices = new Vector<>();
         // Parse each driver
         Iterator<Driver> itdriv;
-        try {
-            itdriv = getDrivers(refresh).iterator();
-            while (itdriv.hasNext()) {
-                Driver driver = itdriv.next();
-                Iterator<File> itdev = driver.getDevices().iterator();
-                while (itdev.hasNext()) {
-                    String device = itdev.next().getName();
-                    String value = String.format("%s (%s)", device, driver.getName());
-                    devices.add(value);
-                }
+        itdriv = getDrivers(refresh).iterator();
+        while (itdriv.hasNext()) {
+            Driver driver = itdriv.next();
+            Iterator<File> itdev = driver.getDevices().iterator();
+            while (itdev.hasNext()) {
+                String device = itdev.next().getName();
+                String value = String.format("%s (%s)", device, driver.getName());
+                devices.add(value);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return devices.toArray(new String[devices.size()]);
     }
 
-    public String[] getAllDevicesPath(boolean refresh) {
+    public String[] getAllDevicesPath(boolean refresh) throws IOException, SecurityException {
         Vector<String> devices = new Vector<>();
         // Parse each driver
         Iterator<Driver> itdriv;
-        try {
-            itdriv = getDrivers(refresh).iterator();
-            while (itdriv.hasNext()) {
-                Driver driver = itdriv.next();
-                Iterator<File> itdev = driver.getDevices().iterator();
-                while (itdev.hasNext()) {
-                    String device = itdev.next().getAbsolutePath();
-                    devices.add(device);
-                }
+        itdriv = getDrivers(refresh).iterator();
+        while (itdriv.hasNext()) {
+            Driver driver = itdriv.next();
+            Iterator<File> itdev = driver.getDevices().iterator();
+            while (itdev.hasNext()) {
+                String device = itdev.next().getAbsolutePath();
+                devices.add(device);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return devices.toArray(new String[devices.size()]);
     }

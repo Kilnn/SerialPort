@@ -11,6 +11,24 @@
     <string name="permission_dialog_setting_sure">去设置</string>
     <string name="permission_dialog_setting_cancel">取消</string>
 
+    <string name="action_close">关闭</string>
+    <string name="action_open">打开</string>
+    <string name="action_sure">确定</string>
+    <string name="action_cancel">取消</string>
+    <string name="serial_port_config">波特率:%d ReadStyle:%s WriteStyle:%s</string>
+    <string name="serial_port_setting">串口设置</string>
+    <string name="baud_rate">波特率</string>
+    <string name="read_style">ReadStyle</string>
+    <string name="write_style">WriteStyle</string>
+    <string name="select_write_serial_port">选择写入串口</string>
+    <string name="write_data_failed">写入失败！！！</string>
+    <string name="write_data_format_hex_error">请输入合法的十六进制字符，如：12 34 56 78 9A BC DE FF</string>
+
+    <string name="error_get_serial_port">获取串口失败！！！</string>
+    <string name="error_get_serial_port_permission">获取串口失败，无权限！！！</string>
+    <string name="error_open_serial_port">打开串口失败！！！</string>
+    <string name="error_open_serial_port_permission">打开串口失败，无权限！！！</string>
+
     <string-array name="baud_rate">
         <item>300</item>
         <item>600</item>
