@@ -1,7 +1,9 @@
 package com.github.kilnn.serialport.sample;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +69,28 @@ public class MainActivity extends AppCompatActivity
                 mTvReadData.setText(null);
             }
         });
+
+        //显示设备信息
+        mTvReadData.setText(getDeviceInfo());
+    }
+
+    private String getDeviceInfo() {
+        StringBuilder sb = new StringBuilder();
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        sb.append(dm.toString()).append("\n");
+        sb.append("densityDpi:").append(dm.densityDpi).append("\n");
+
+        sb.append("BRAND:").append(Build.BRAND).append("\n");
+        sb.append("MODEL:").append(Build.MODEL).append("\n");
+        sb.append("SDK:").append(Build.VERSION.SDK).append("\n");
+        sb.append("RELEASE:").append(Build.VERSION.RELEASE).append("\n");
+        sb.append("SDK_INT:").append(Build.VERSION.SDK_INT).append("\n");
+
+        sb.append("TotalMemory:").append(Utils.getTotalMemory(this)).append("\n");
+        sb.append("AvailMemory:").append(Utils.getAvailMemory(this)).append("\n");
+
+        return sb.toString();
     }
 
     @Override
